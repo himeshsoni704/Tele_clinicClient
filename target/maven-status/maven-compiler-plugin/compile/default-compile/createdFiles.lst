@@ -1,0 +1,5 @@
+bot\AutoReplyBot.class
+bot\Storable.class
+bot\TextBotMessage.class
+bot\BotMessage.class
+bot\LocationBotMessage.class

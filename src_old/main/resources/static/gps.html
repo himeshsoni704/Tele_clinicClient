@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Location</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-sm text-center">
+        <!-- Location Icon (Using SVG for reliability) -->
+        <svg class="mx-auto h-12 w-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        <h1 class="text-2xl font-bold mt-4 text-gray-800">Emergency Location Share</h1>
+        <p class="text-gray-600 mt-2">Tap the button below to instantly share your precise GPS location with emergency services.</p>
+
+        <button id="gpsButton" onclick="sendGps()"
+            class="mt-6 w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
+            Share My GPS Location
+        </button>
+
+        <p id="result" class="mt-4 p-3 text-sm rounded-lg bg-gray-100 text-gray-700 font-medium whitespace-pre-wrap"></p>
+    </div>
+
+    <script>
+        function sendGps() {
+            const resultElement = document.getElementById('result');
+            const button = document.getElementById('gpsButton');
+            
+            button.disabled = true;
+            button.innerText = 'Locating... Please Wait.';
+            resultElement.innerText = 'Attempting to fetch location... Make sure location services are enabled.';
+
+            // Geolocation API to get the current position
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                let urlParams = new URLSearchParams(window.location.search);
+                let sender = urlParams.get('sender');
+
+                if (!sender) {
+                    resultElement.innerText = "Error: Sender ID missing from link.";
+                    button.disabled = false;
+                    button.innerText = 'Share My GPS Location';
+                    return;
+                }
+
+                // POST the location data back to the Spring Boot backend
+                // This uses the current page's origin, e.g., https://<<YOUR_PUBLIC_URL>>/receive-gps
+                const apiUrl = '/receive-gps?sender=' + encodeURIComponent(sender) +
+                               '&lat=' + pos.coords.latitude + '&lon=' + pos.coords.longitude;
+                               
+                resultElement.innerText = "Sending location data...";
+
+                fetch(apiUrl, { method: 'POST' })
+                    .then(response => {
+                        if (!response.ok) {
+                            // If the response is not 200 OK, read the body for the error message
+                            return response.text().then(text => { throw new Error(text) });
+                        }
+                        return response.text();
+                    })
+                    .then(text => {
+                        // Success handling
+                        resultElement.classList.remove('bg-gray-100', 'text-gray-700');
+                        resultElement.classList.add('bg-green-100', 'text-green-700');
+                        resultElement.innerText = text;
+                        button.innerText = 'Location Sent Successfully!';
+                    })
+                    .catch(e => {
+                        // Failure handling
+                        console.error('Fetch Error:', e);
+                        resultElement.classList.remove('bg-gray-100', 'text-gray-700');
+                        resultElement.classList.add('bg-red-100', 'text-red-700');
+                        // Use the error message from the backend, or a generic failure
+                        resultElement.innerText = "Failed to send location: " + (e.message || "Network or server error.");
+                        button.disabled = false;
+                        button.innerText = 'Try Again';
+                    });
+            }, function(error) {
+                // Error handling for geolocation failure (user denied, timeout, etc.)
+                resultElement.classList.remove('bg-gray-100', 'text-gray-700');
+                resultElement.classList.add('bg-red-100', 'text-red-700');
+                resultElement.innerText = "Couldn't get your location. Please check your phone's settings.\nError: " + error.message;
+                button.disabled = false;
+                button.innerText = 'Try Again';
+            }, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            });
+        }
+    </script>
+</body>
+</html>

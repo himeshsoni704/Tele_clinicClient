@@ -1,0 +1,34 @@
+{
+  "chatId": "5625334180",
+  "text": "/start"
+}
+{
+  "chatId": "5625334180",
+  "text": "hi"
+}
+{
+  "chatId": "5625334180",
+  "latitude": 25.365921,
+  "longitude": 55.389202
+}
+{
+  "chatId": "5625334180",
+  "text": "h"
+}
+{
+  "chatId": "5625334180",
+  "text": "/start"
+}
+{
+  "chatId": "5625334180",
+  "text": "Help"
+}
+{
+  "text": "Help",
+  "chatId": "5625334180"
+}
+{
+  "latitude": 25.367703,
+  "longitude": 55.394112,
+  "chatId": "5625334180"
+}
