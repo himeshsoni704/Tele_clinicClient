@@ -1,5 +1,7 @@
+bot\BotRunner.class
+bot\LocationBotMessage.class
 bot\AutoReplyBot.class
 bot\Storable.class
 bot\TextBotMessage.class
 bot\BotMessage.class
-bot\LocationBotMessage.class
+bot\Notifier.class

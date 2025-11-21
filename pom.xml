@@ -8,6 +8,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+     <groupId>org.apache.poi</groupId>
+    <artifactId>poi-ooxml</artifactId>
+    <version>5.2.3</version>
+        </dependency>
+
         <!-- Telegram Bot API -->
         <dependency>
             <groupId>org.telegram</groupId>

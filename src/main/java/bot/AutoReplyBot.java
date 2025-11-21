@@ -54,6 +54,13 @@ public class AutoReplyBot extends TelegramLongPollingBot {
         sendText(chatId, reply);
     }
 
+    public void registerBot() throws Exception {
+    TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+    botsApi.registerBot(this);
+    System.out.println("AutoReplyBot started successfully...");
+}
+
+
     private void sendWelcome(String chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
@@ -83,7 +90,7 @@ public class AutoReplyBot extends TelegramLongPollingBot {
          { System.out.println("Error sending welcome message: " + e.getMessage()); }
     }
 
-    private void sendText(String chatId, String text) {
+    public void sendText(String chatId, String text) { //bCOZ THIS EVEN NOTIFIER USING
         SendMessage message = new SendMessage(chatId, text);
         try { execute(message); } catch (TelegramApiException e) { e.printStackTrace(); }
     }
