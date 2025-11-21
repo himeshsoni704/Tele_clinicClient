@@ -6,3 +6,47 @@
   "text": "Injured leg",
   "chatId": "6304460986"
 }
+{
+  "text": "Inquiry",
+  "chatId": "6304460986"
+}
+{
+  "text": "Injured leg",
+  "chatId": "6304460986"
+}
+{
+  "text": "/start",
+  "chatId": "5535869992"
+}
+{
+  "text": "Ask Help",
+  "chatId": "5535869992"
+}
+{
+  "text": "Ask Help",
+  "chatId": "5535869992"
+}
+{
+  "text": "Help",
+  "chatId": "5625334180"
+}
+{
+  "text": "Ask Help",
+  "chatId": "5535869992"
+}
+{
+  "text": "Ask Help",
+  "chatId": "5535869992"
+}
+{
+  "text": "Help",
+  "chatId": "5535869992"
+}
+{
+  "text": "Heyo",
+  "chatId": "5535869992"
+}
+{
+  "text": "Billi",
+  "chatId": "5535869992"
+}
