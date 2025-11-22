@@ -121,7 +121,7 @@ public class AutoReplyBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "8509775935:AAH64ApWxy7TPfNWpMSWqN_NfNSFt8FvM1k";
+        return "Enyer_bot_token_here";
     }
 
     public static void main(String[] args) {
